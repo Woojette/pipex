@@ -1,0 +1,8 @@
+infile
+outfile
+pipex.c
+pipex.h
+
+exevce("ls");
+
+/home/wooyang/bin/ls
