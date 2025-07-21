@@ -5,6 +5,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 
 int     main(int argc, char **argv, char **env);
 int	    ft_strncmp(const char *s1, const char *s2, size_t n);

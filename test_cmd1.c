@@ -7,7 +7,10 @@ typedef struct s_pipex
     char    *temp;
     char    *resultat;
     char    **pathd;
-    char **commande;
+    char    **commande;
+    char    **args;
+    pid_t   pid;
+    int     pipefd[2];
 }t_pipex;
 
 void    ft_free_tab(char **str)
@@ -64,7 +67,7 @@ char *adresse(char ***argv, char ***env, int nb, t_pipex *pipex)
         printf("%d %s\n", j, pipex->temp);
         if (access(pipex->temp, F_OK) == 0)
         {
-            printf("final %s\n", pipex->temp);
+            printf("final %s\n", pipex->temp); //execve 넣을 주소 (temp에 들어감)
             break ;
         }
         free(pipex->temp);
@@ -99,17 +102,15 @@ int main(int argc, char **argv, char **env)
     if (!pipex)
         return (1);
     pathd = adresse(&argv, &env, 2, pipex);
-    printf("fonction %s\n", pathd);
-
-   
     free(pathd);
     free(pipex);
+    return (0);
     // int n = 0;
     // while(commande[n])
     // {
     //     printf("%d %s\n", n ,commande[n]);
     //     n++;
-    // }
+    // }clear
     // printf("%d %s\n", n ,commande[n]);
     // execve(temp, commande, NULL);
 
