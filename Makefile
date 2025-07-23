@@ -2,9 +2,9 @@ CC	= cc
 
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC	=	test7.c\
+SRC	=	main.c\
 		pipex_exec.c\
-		pipex_commande.c\
+		pipex_fork.c\
 		libft_petit.c\
 
 OBJ = ${SRC:.c=.o}
@@ -20,9 +20,9 @@ ${NAME} : ${OBJ}
 	ar -rcs -o $@ $^
 
 clean	:
-	rm -f	test7.c\
+	rm -f	main.c\
 			pipex_exec.c\
-			pipex_commande.c\
+			pipex_fork.c\
 			libft_petit.c\
 
 fclean	:	clean
