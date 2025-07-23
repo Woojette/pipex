@@ -4,3 +4,17 @@ parce que j'ai sommeil
 cafe cafe
 555
 vert
+
+pid1 , pid2
+
+1. pid1 == 0
+    1) open : inf
+    2) open : argv[1]
+
+2. pid2 == 0
+    1) open : outf
+    2) open : argv[4]
+
+
+./pipex infile "cat -e" "wc -l" outfile
+   [0]   [1]     [2]      [3]     [4]
