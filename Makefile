@@ -20,13 +20,12 @@ ${NAME} : ${OBJ}
 	ar -rcs $@ $^
 
 clean	:
-	rm -f	main.o \
-			pipex_exec.o \
-			pipex_fork.o \
-			libft_petit.o
+	rm -f	${OBJ}
 
 fclean	:	clean
-	rm	-f	${OBJ}
+	rm	-f	${NAME}
 
 re	:	fclean
 	make
+
+.PHONY: all clean fclean re
