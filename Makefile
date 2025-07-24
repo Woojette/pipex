@@ -5,7 +5,8 @@ CFLAGS	= -Wall -Wextra -Werror
 SRC	=	main.c \
 		pipex_exec.c \
 		pipex_fork.c \
-		libft_petit.c
+		libft_petit.c \
+		libft_split.c
 
 OBJ = ${SRC:.c=.o}
 
