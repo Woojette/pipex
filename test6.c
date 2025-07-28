@@ -1,20 +1,20 @@
 #include "pipex.h"
 
-typedef struct s_pipex
-{
-    char    *path;
-    char    *cmd;
-    char    *temp;
-    char    *resultat;
-    char    **pathd;
-    char    **commande;
-    char    **args;
-    pid_t   pid1;
-    pid_t   pid2;
-    int     pipefd[2];
-    int     inf;
-    int     outf;
-}t_pipex;
+// typedef struct s_pipex
+// {
+//     char    *path;
+//     char    *cmd;
+//     char    *temp;
+//     char    *resultat;
+//     char    **pathd;
+//     char    **commande;
+//     char    **args;
+//     pid_t   pid1;
+//     pid_t   pid2;
+//     int     pipefd[2];
+//     int     inf;
+//     int     outf;
+// }t_pipex;
 
 void    ft_free_tab(char **str)
 {

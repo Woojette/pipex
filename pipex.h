@@ -44,6 +44,7 @@ typedef struct s_pipex
 }t_pipex;
 
 void	ft_execve(char ***argv, char ***env, int nb, t_pipex *pipex);
-void	ft_fork(char ***argv, int nb, t_pipex *pipex);
+void	ft_fork(char **argv, int nb, t_pipex *pipex);
+int	exec(char *arg, char **env);
 
 #endif

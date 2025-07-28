@@ -12,24 +12,35 @@
 
 #include "pipex.h"
 
-void	ft_fork(char ***argv, int nb, t_pipex *pipex)
+void	ft_fork(char **argv, int nb, t_pipex *pipex)
 {
 	if (nb == 1)
 	{
-		pipex->inf = open((*argv)[nb], O_RDONLY);
+		pipex->inf = open(argv[nb], O_RDONLY);
 		if (pipex->inf == -1)
 		{
+			close(pipex->pipefd[0]);
+			close(pipex->pipefd[1]);
 			perror("infile");
+			free(pipex);
 			exit (1);
 		}
 		if (dup2(pipex->inf, 0) == -1)
 		{
+			close(pipex->pipefd[0]);
+			close(pipex->pipefd[1]);
+			close(pipex->inf);
 			perror("dup2_inf");
+			free(pipex);
 			exit (1);
 		}
 		if (dup2(pipex->pipefd[1], 1) == -1)
 		{
+			close(pipex->pipefd[0]);
+			close(pipex->pipefd[1]);
+			close(pipex->inf);
 			perror("dup2_pipefd[1]");
+			free(pipex);
 			exit (1);
 		}
 		close(pipex->pipefd[0]);
@@ -38,15 +49,28 @@ void	ft_fork(char ***argv, int nb, t_pipex *pipex)
 	}
 	if (nb == 4)
 	{
-		pipex->outf = open((*argv)[nb], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		pipex->outf = open(argv[nb], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (pipex->outf == -1)
 		{
+			close(pipex->pipefd[0]);
 			perror("outfile");
+			free(pipex);
 			exit (1);
+		}
+		if (dup2(pipex->pipefd[0], 0) == -1)
+        {
+			close(pipex->pipefd[0]);
+			close(pipex->outf);
+            perror("pipefd[0]");
+			free(pipex);
+            exit (1);            
 		}
 		if (dup2(pipex->outf, 1) == -1)
 		{
+			close(pipex->pipefd[0]);
+			close(pipex->outf);
 			perror("outf");
+			free(pipex);
 			exit (1);
 		}
 		close(pipex->pipefd[0]);

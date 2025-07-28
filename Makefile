@@ -8,17 +8,22 @@ SRC	=	main.c \
 		libft_petit.c \
 		libft_split.c
 
+# SRC	=	test6.c \
+# 		libft_petit.c \
+# 		libft_split.c
+
 OBJ = ${SRC:.c=.o}
 
 %.o:%.c
 	${CC} ${CFLAGS} -c $< -o $@
 
-NAME	= pipex.a
+NAME	= pipex
 
 all : ${NAME}
 
 ${NAME} : ${OBJ}
-	ar -rcs $@ $^
+	${CC} ${CFLAGS} ${OBJ} -o ${NAME}
+	# ar -rcs $@ $^
 
 clean	:
 	rm -f	${OBJ}
