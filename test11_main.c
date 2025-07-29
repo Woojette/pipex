@@ -12,6 +12,19 @@
 
 #include "pipex.h"
 
+void	ft_free_tab(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
 char	*check_path(char **tab, char **cmd)
 {
 	int		i;
@@ -38,9 +51,15 @@ char	*check_path(char **tab, char **cmd)
 
 void	ft_check_commande(char **argv, char ***env, int nb, t_pipex *pipex)
 {
+	if (pipex->commande[0] == NULL)
+	{
+		free(pipex->commande);
+		free(pipex);
+		exit(1);
+	}
 	if (access(argv[nb], X_OK) == 0)
 	{
-		if (execve(argv[nb], pipex->commande, *env) == -1)
+		if (execve(argv[nb], pipex->commande, env) == -1)
 		{
 			perror("execve");
 			ft_free_tab(pipex->commande);
@@ -60,7 +79,7 @@ void	ft_erreur127(char *temp, char ***env, t_pipex *pipex)
 		free(pipex);
 		exit (127);
 	}
-	if (execve(temp, pipex->commande, *env) == -1)
+	if (execve(temp, pipex->commande, env) == -1)
 	{
 		perror("execve");
 		ft_free_tab(pipex->commande);
@@ -70,20 +89,6 @@ void	ft_erreur127(char *temp, char ***env, t_pipex *pipex)
 	}
 }
 
-char	*get_path(char **env)
-{
-	int	i;
-
-	i = 0;
-	while ((env)[i])
-	{
-		if (ft_strncmp((env)[i], "PATH=", 5) == 0)
-			break ;
-		i++;
-	}
-	return (env[i] + 5);
-}
-
 void	ft_execve(char ***argv, char ***env, int nb, t_pipex *pipex)
 {
 	int		i;
@@ -91,21 +96,20 @@ void	ft_execve(char ***argv, char ***env, int nb, t_pipex *pipex)
 
 	i = 0;
 	pipex->commande = ft_split((*argv)[nb], ' ');
-	if (pipex->commande[0] == NULL)
-		return (free(pipex->commande), free(pipex), exit(1));
-	if (access((*argv)[nb], X_OK) == 0)
+	ft_check_commande(pipex->commande, env, nb, pipex);
+	pipex->path = "PATH=";
+	while ((*env)[i])
 	{
-		if (execve((*argv)[nb], pipex->commande, *env) == -1)
-		{
-			perror("execve");
-			return (ft_free_tab(pipex->commande), free(pipex), exit (1));
-		}
-		exit(0);
+		if (ft_strncmp((*env)[i], pipex->path, 5) == 0)
+			break ;
+		i++;
 	}
-	pipex->path = get_path(*env);
-	pipex->pathd = ft_split(pipex->path, ':');
+	pipex->pathd = ft_split((*env)[i] + 5, ':');
 	if (!pipex->pathd)
-		return (ft_free_tab(pipex->commande), exit(1));
+	{
+		ft_free_tab(pipex->commande);
+		return ;
+	}
 	temp = check_path(pipex->pathd, pipex->commande);
 	ft_erreur127(temp, env, pipex);
 }

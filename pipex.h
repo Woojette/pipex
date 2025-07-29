@@ -26,6 +26,7 @@ char	*ft_strdup(char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+void	ft_free_tab(char **str);
 
 typedef struct s_pipex
 {
@@ -36,15 +37,17 @@ typedef struct s_pipex
 	char	**pathd;
 	char	**commande;
 	char	**args;
-	pid_t	pid1;
-	pid_t	pid2;
+	int		status;
+	int		pid1;
+	int		pid2;
 	int		pipefd[2];
 	int		inf;
 	int		outf;
 }t_pipex;
 
 void	ft_execve(char ***argv, char ***env, int nb, t_pipex *pipex);
-void	ft_fork(char **argv, int nb, t_pipex *pipex);
-int	exec(char *arg, char **env);
+void	ft_fork1(char **argv, char **env, int nb, t_pipex *pipex);
+void	ft_fork4(char **argv, char **env, int nb, t_pipex *pipex);
+int		exec(char *arg, char **env);
 
 #endif
