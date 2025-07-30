@@ -17,6 +17,8 @@ int	ft_init(t_pipex **pipex)
 	*pipex = malloc(sizeof(t_pipex));
 	if (!*pipex)
 		return (1);
+	(*pipex)->inf = -1;
+	(*pipex)->outf = -1;
 	if (pipe((*pipex)->pipefd) == -1)
 		return (perror("pipe"), free(*pipex), 1);
 	return (0);
