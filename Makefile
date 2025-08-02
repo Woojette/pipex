@@ -5,7 +5,6 @@ CFLAGS	= -Wall -Wextra -Werror
 SRC	=	main.c \
 		pipex_exec.c \
 		pipex_fork.c \
-		pipex_free.c \
 		libft_petit.c \
 		libft_split.c
 

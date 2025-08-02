@@ -36,19 +36,17 @@ char	*check_path(char **tab, char **cmd)
 	return (NULL);
 }
 
-void	ft_check_commande(char **argv, char ***env, int nb, t_pipex *pipex)
+void	ft_free_tab(char **str)
 {
-	if (access(argv[nb], X_OK) == 0)
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		if (execve(argv[nb], pipex->commande, *env) == -1)
-		{
-			perror("execve");
-			ft_free_tab(pipex->commande);
-			free(pipex);
-			exit (1);
-		}
-		exit(0);
+		free(str[i]);
+		i++;
 	}
+	free(str);
 }
 
 void	ft_erreur127(char *temp, char ***env, t_pipex *pipex)
@@ -93,9 +91,9 @@ void	ft_execve(char ***argv, char ***env, int nb, t_pipex *pipex)
 	pipex->commande = ft_split((*argv)[nb], ' ');
 	if (pipex->commande[0] == NULL)
 		return (free(pipex->commande), free(pipex), exit(1));
-	if (access((*argv)[nb], X_OK) == 0)
+	if (access(pipex->commande[0], X_OK) == 0)
 	{
-		if (execve((*argv)[nb], pipex->commande, *env) == -1)
+		if (execve(pipex->commande[0], pipex->commande, *env) == -1)
 		{
 			perror("execve");
 			return (ft_free_tab(pipex->commande), free(pipex), exit (1));

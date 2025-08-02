@@ -1,0 +1,17 @@
+42_pipex_tester
+file2
+infile
+libft_petit.c
+libft_petit.o
+libft_split.c
+libft_split.o
+main.c
+main.o
+Makefile
+outfile
+pipex
+pipex_exec.c
+pipex_exec.o
+pipex_fork.c
+pipex_fork.o
+pipex.h

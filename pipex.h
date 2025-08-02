@@ -26,7 +26,6 @@ char	*ft_strdup(char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
-void	ft_free_tab(char **str);
 
 typedef struct s_pipex
 {
